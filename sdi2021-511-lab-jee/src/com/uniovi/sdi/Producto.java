@@ -10,7 +10,8 @@ public class Producto {
 		this.imagen = imagen;
 		this.precio = precio;
 	}
-
+	public	Producto(){
+	}//Hay que ponerlo apra poder ser usado como un beam sin argumentos
 	public String getNombre() {
 		return nombre;
 	}
