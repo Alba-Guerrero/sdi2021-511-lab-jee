@@ -23,17 +23,20 @@
 
 	<!-- Barra de navegacion -->
 
-	<nav class="navbar navbar-defualt">
+	<nav class="nav navbar-default">
 
 	<div class="container-fluid">
-		<ul class="navbar navbar-nav">
-			<li><a href="inlcuirEnCarrito">Carrito</a></li>
-			<li><a href="login.jsp">Login</a></li>
-			<li><a href="admin.jsp">Administrar productos</a></li>
-
+		<ul class="nav navbar-nav">
+			<li><a href="incluirEnCarrito"> Carrito </a></li>
+			<li><a href="login.jsp"> Login </a></li>
+			<li><a href="admin.jsp"> Administrar productos </a></li>
+			<li><a href="productos"> Vista productos </a></li>
 		</ul>
 		<div class="nav navbar-right">
-			<jsp:getProperty name="contador" property="total" />Visitas
+			<div class="center-block">
+				<jsp:getProperty name="contador" property="total" />Visitas
+
+			</div>
 
 		</div>
 
@@ -55,9 +58,9 @@
 					<div>
 						<img src="<c:out	value="${producto.imagen}"/>" />
 						<div>
-							
+
 							<c:out value="${producto.nombre}" />
-							
+
 						</div>
 						<a
 							href="incluirEnCarrito?producto=<c:out	value="${producto.nombre}"/>"
@@ -67,7 +70,7 @@
 					</div>
 				</div>
 			</c:forEach>
-			
+
 
 		</div>
 
