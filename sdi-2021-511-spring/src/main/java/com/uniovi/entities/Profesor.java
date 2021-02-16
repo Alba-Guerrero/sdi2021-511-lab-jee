@@ -40,6 +40,7 @@ public class Profesor {
 		this.id = id;
 	}
 
+	
 
 	public Profesor( String dNI, String nombre, String apellidos, String categoria) {
 		super();

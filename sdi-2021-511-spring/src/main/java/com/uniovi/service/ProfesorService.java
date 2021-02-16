@@ -10,36 +10,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Profesor;
+import com.uniovi.repositories.ProfesorRepository;
 
 @Service
 public class ProfesorService {
+	@Autowired
+	private ProfesorRepository profesorRepository;
 
-	private List<Profesor> profesores = new LinkedList<Profesor>();
-
-	@PostConstruct
-	public void init() {
-		profesores.add(new Profesor("584364789M", "Jane", "Doe", "Primaria"));
-		profesores.add(new Profesor("11402879Y", "Peter", "Doe", "Infantil"));
-	}
 
 	public List<Profesor> getProfesores() {
+		
+		List<Profesor> profesores = new LinkedList<Profesor>();
+		profesorRepository.findAll().forEach(profesores::add);
 		return profesores;
+		
 	}
 
 	public Profesor getProfesor(Long id) {
-		return profesores.stream().filter(profesor -> profesor.getId().equals(id)).findFirst().get();
+		return profesorRepository.findById(id).get();
 	}
 
 	public void addProfesor(Profesor profesor) {
-		if (profesor.getId() != null) {
-			profesor.setId(profesores.get(profesores.size() - 1).getId() + 1);
-			profesores.add(profesor);
-		}
+		
+		profesorRepository.save(profesor);
 
 	}
 
-	public void deleteProfesor(String DNI) {
-		profesores.removeIf(profesor -> profesor.getDNI().equals(DNI));
+	public void deleteProfesor(Long id) {
+		profesorRepository.deleteById(id);
 	}
 
 }
