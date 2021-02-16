@@ -40,17 +40,13 @@
         <th>DNI</th>
         <th>Categoria</th>
 		<th class="col-md-1"> </th>
-		<th class="col-md-1"> </th>
-		<th class="col-md-1"> </th>
-		<th class="col-md-1"> </th>
-		<th class="col-md-1"> </th>
       </tr>
     </thead>
 	<tbody>
-	  <tr th:each="profesor : ${profesorlist}">
+	  <tr th:each="profesor : ${profesorList}">
 	    <td th:text="${profesor.id}"> 1</td>
 	    <td th:text="${profesor.nombre}"> Nombre</td>
-	    <td th:text="${profesor.apellido}">Apellido</td>
+	    <td th:text="${profesor.apellidos}">Apellido</td>
 	     <td th:text="${profesor.dni}"> Dni</td>
 	    <td th:text="${profesor.categoria}">Categoria</td>
 	    
