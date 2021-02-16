@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragments/head">
+	
+</head>
+
+<body>
+
+<!-- Barra de Navegación superior -->
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/profesor/list">Ver lista de profesores</a></li>
+		<li class="active"><a href="/profesor/add">Agregar un profesor</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container">
+  <h2>Profesores</h2>
+  <p>Actualemnte estan dados de alta los siguientes profesores</p>                                                                                      
+  <div class="table-responsive">          
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="col-md-1">id</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>DNI</th>
+        <th>Categoria</th>
+		<th class="col-md-1"> </th>
+		<th class="col-md-1"> </th>
+		<th class="col-md-1"> </th>
+		<th class="col-md-1"> </th>
+		<th class="col-md-1"> </th>
+      </tr>
+    </thead>
+	<tbody>
+	  <tr th:each="profesor : ${profesorlist}">
+	    <td th:text="${profesor.id}"> 1</td>
+	    <td th:text="${profesor.nombre}"> Nombre</td>
+	    <td th:text="${profesor.apellido}">Apellido</td>
+	     <td th:text="${profesor.dni}"> Dni</td>
+	    <td th:text="${profesor.categoria}">Categoria</td>
+	    
+	    <td><a th:href="${'/profesor/edit/' + profesor.id}">modificar</a></td>
+	    <td><a th:href="${'/profesor/delete/' + profesor.id}">eliminar</a></td>
+	  </tr>
+	</tbody>
+  </table>
+  </div>
+</div>
+
+
+</body>
+</html>

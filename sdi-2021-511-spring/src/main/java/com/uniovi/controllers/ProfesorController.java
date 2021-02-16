@@ -12,35 +12,50 @@ import com.uniovi.service.ProfesorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 public class ProfesorController {
 	@Autowired
 	private ProfesorService profesorService;
 
 	@RequestMapping("/profesor/list")
-	public String getList() {
-		return profesorService.getProfesores().toString();
+	public String getList(Model model) {
+		model.addAttribute("profesorList", profesorService.getProfesores());
+		return "profesor/list";
+	}
+
+	@RequestMapping(value = "/profesor/add",method= RequestMethod.POST )
+	public String addProfesor(@ModelAttribute Profesor profesor) {
+		profesorService.addProfesor(profesor);
+		return "redirect:/profesor/list";
 	}
 
 	@RequestMapping(value = "/profesor/add")
-	public String addProfesor(@ModelAttribute Profesor profesor) {
-		profesorService.addProfesor(new Profesor("584364789M", "Jane", "Doe", "Primaria"));
-		profesorService.addProfesor(new Profesor("11402879Y", "Peter", "Doe", "Infantil"));
-		return "Ok";
-	}
-
-	@RequestMapping("/profesor/details/{dni}")
-	public String getDetail(@PathVariable Long id) {
-		return profesorService.getProfesor(id).toString();
+	public String getProfesor() {
+		return "profesor/add";
 	}
 
 	@RequestMapping(value = "/profesor/delete/{id}")
 	public String deleteProfesor(@PathVariable Long id) {
 		profesorService.deleteProfesor(id);
-		return "Ok";
+		return "redirect:/profesor/list";
+	}
+	
+	
+	
+	
+	@RequestMapping(value="/profesor/edit/{id}")
+	public String getEdit(Model model, @PathVariable Long id){
+	model.addAttribute("mark", profesorService.getProfesor(id));
+	return "mark/edit";
+	}
+	@RequestMapping(value="/profesor/edit/{id}", method=RequestMethod.POST)
+	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Profesor profesor){
+	profesor.setId(id);
+	profesorService.addProfesor(profesor);
+	return "redirect:/mark/details/"+id;
 	}
 
 }

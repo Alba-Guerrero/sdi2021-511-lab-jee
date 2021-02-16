@@ -9,98 +9,70 @@ public class Profesor {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String DNI;
-	 private String nombre;
-	 private String Apellidos;
-	 private String categoria;
-	 
-	 
-	
-	
-	
-	
-	
+	private String dni;
+	private String nombre;
+	private String apellidos;
+	private String categoria;
+
 	public Profesor() {
 		super();
 	}
-
-
-
-
 
 	public Long getId() {
 		return id;
 	}
 
-
-
-
-
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	
-
-	public Profesor( String dNI, String nombre, String apellidos, String categoria) {
+	public Profesor(String dNI, String nombre, String apellidos, String categoria) {
 		super();
-		DNI = dNI;
+		this.dni = dNI;
 		this.nombre = nombre;
-		Apellidos = apellidos;
+		this.apellidos = apellidos;
 		this.categoria = categoria;
 	}
 
-
-	public Profesor( Long id,String dNI, String nombre, String apellidos, String categoria) {
+	public Profesor(Long id, String dNI, String nombre, String apellidos, String categoria) {
 		super();
-		this.id=id;
-		DNI = dNI;
+		this.id = id;
+		dni = dNI;
 		this.nombre = nombre;
-		Apellidos = apellidos;
+		this.apellidos = apellidos;
 		this.categoria = categoria;
 	}
 
-
-
-
-
-	public String getDNI() {
-		return DNI;
+	public String getDni() {
+		return dni;
 	}
-	public void setDNI(String dNI) {
-		DNI = dNI;
+
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 	public String getApellidos() {
-		return Apellidos;
+		return apellidos;
 	}
+
 	public void setApellidos(String apellidos) {
-		Apellidos = apellidos;
+		this.apellidos = apellidos;
 	}
+
 	public String getCategoria() {
 		return categoria;
 	}
+
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
-
-
-
-
-
-	@Override
-	public String toString() {
-		return "Profesor [DNI=" + DNI + ", nombre=" + nombre + ", Apellidos=" + Apellidos + ", categoria=" + categoria
-				+ "]";
-	}
-	 
-	
-	
-	 
 
 }
