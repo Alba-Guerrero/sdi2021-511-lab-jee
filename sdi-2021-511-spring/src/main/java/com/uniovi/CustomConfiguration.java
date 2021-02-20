@@ -30,3 +30,4 @@ public class CustomConfiguration implements WebMvcConfigurer {
 		registry.addInterceptor(localeChangeInterceptor());
 	}
 }
+
