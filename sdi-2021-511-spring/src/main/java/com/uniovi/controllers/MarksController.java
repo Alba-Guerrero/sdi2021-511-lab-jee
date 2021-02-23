@@ -1,17 +1,17 @@
 package com.uniovi.controllers;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.uniovi.entities.Mark;
+import com.uniovi.entities.User;
 import com.uniovi.service.MarksService;
 import com.uniovi.service.UsersService;
+import com.uniovi.validators.MarkValidator;
+import com.uniovi.validators.SignUpFormValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -21,7 +21,12 @@ public class MarksController {
 	
 	@Autowired
 	private UsersService usersService;
-
+	
+	
+	@Autowired
+	private MarkValidator marksValidator;
+	
+	
 	@RequestMapping("/mark/list")
 	public String getList(Model model) {
 		model.addAttribute("markList", marksService.getMarks());
@@ -29,7 +34,12 @@ public class MarksController {
 	}
 
 	@RequestMapping(value = "/mark/add", method = RequestMethod.POST)
-	public String setMark(@ModelAttribute Mark mark) {
+	public String setMark(@Validated Mark mark, BindingResult result) {
+		marksValidator.validate(mark, result);
+		if (result.hasErrors()) {
+
+			return "mark/add";
+		}
 		marksService.addMark(mark);
 		return "redirect:/mark/list";
 	}
@@ -45,8 +55,16 @@ public class MarksController {
 		marksService.deleteMark(id);
 		return "redirect:/mark/list";
 	}
+	
+	
+	@RequestMapping(value = "/mark/add", method = RequestMethod.GET)
+	public String setMark(Model model) {
+	model.addAttribute("mark", new Mark());
+	 return "mark/add";
+	}
 
-	@RequestMapping(value = "/mark/add")
+
+	@RequestMapping(value = "mark/add")
 	public String getMark(Model model) {
 		model.addAttribute("usersList", usersService.getUsers());
 		return "mark/add";

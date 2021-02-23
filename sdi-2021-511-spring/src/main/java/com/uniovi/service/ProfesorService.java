@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Profesor;
+import com.uniovi.entities.User;
 import com.uniovi.repositories.ProfesorRepository;
 
 @Service
@@ -22,9 +23,13 @@ public class ProfesorService {
 		
 		List<Profesor> profesores = new LinkedList<Profesor>();
 		profesorRepository.findAll().forEach(profesores::add);
+		System.err.println(profesorRepository.count());
 		return profesores;
 		
 	}
+	public Profesor getProfesorByDni(String dni) {
+		return profesorRepository.findByDni(dni);
+		}
 
 	public Profesor getProfesor(Long id) {
 		return profesorRepository.findById(id).get();

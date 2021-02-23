@@ -2,6 +2,7 @@ package com.uniovi.entities;
 
 import javax.persistence.*;
 @Entity
+@Table(name="mark")
 public class Mark {
 	@Id
 	@GeneratedValue

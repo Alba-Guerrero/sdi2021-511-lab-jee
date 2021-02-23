@@ -3,9 +3,14 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.uniovi.entities.Mark;
 import com.uniovi.entities.Profesor;
+import com.uniovi.entities.User;
 
 public interface ProfesorRepository  extends CrudRepository<Profesor, Long>{
+	
+	Profesor findByDni(String dni);
 }
+
+
 
 
 

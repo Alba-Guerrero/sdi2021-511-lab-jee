@@ -1,24 +1,26 @@
 package com.uniovi.controllers;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.uniovi.entities.Mark;
 import com.uniovi.entities.Profesor;
 import com.uniovi.service.MarksService;
 import com.uniovi.service.ProfesorService;
+import com.uniovi.validators.ProfesorValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ProfesorController {
 	@Autowired
 	private ProfesorService profesorService;
+	
+	
+	@Autowired 
+	private ProfesorValidator profesorValidator;
 
 	@RequestMapping("/profesor/list")
 	public String getList(Model model) {
@@ -27,10 +29,25 @@ public class ProfesorController {
 	}
 
 	@RequestMapping(value = "/profesor/add",method= RequestMethod.POST )
-	public String addProfesor(@ModelAttribute Profesor profesor) {
+	public String addProfesor(@Validated Profesor profesor,BindingResult result) {
+		profesorValidator.validate(profesor, result);
+		if (result.hasErrors()) {
+
+			return "profesor/add";
+		}
 		profesorService.addProfesor(profesor);
 		return "redirect:/profesor/list";
 	}
+	
+	
+	
+	
+	@RequestMapping(value = "/profesor/add", method = RequestMethod.GET)
+	public String addProfesor(Model model) {
+	model.addAttribute("profesor", new Profesor());
+	 return "profesor/add";
+	}
+
 
 	@RequestMapping(value = "/profesor/add")
 	public String getProfesor() {
