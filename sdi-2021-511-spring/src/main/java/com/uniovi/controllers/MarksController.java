@@ -7,6 +7,11 @@ import com.uniovi.service.UsersService;
 import com.uniovi.validators.MarkValidator;
 import com.uniovi.validators.SignUpFormValidator;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +27,8 @@ public class MarksController {
 	@Autowired
 	private UsersService usersService;
 	
+	@Autowired
+	private HttpSession httpSession;
 	
 	@Autowired
 	private MarkValidator marksValidator;

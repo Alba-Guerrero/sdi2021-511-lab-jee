@@ -28,16 +28,21 @@
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="/mark/list"th:text="#{see.mark.message}"> <span
-						class="glyphicon glyphicon-user"></span>Ver Notas</a></li>
+					<li class="active"><a href="/mark/list"
+						th:text="#{see.mark.message}"> <span
+							class="glyphicon glyphicon-user"></span>Ver Notas
+					</a></li>
 					<li><a href="/mark/add" th:text="#{add.mark.message}"> <span
-						class="glyphicon glyphicon-user"></span></a></li>
-					<li><a href="/mark/filter"th:text="#{filter.mark.message}"> <span
-						class="glyphicon glyphicon-user"></span></a></li>
+							class="glyphicon glyphicon-user"></span></a></li>
+					<li><a href="/mark/filter" th:text="#{filter.mark.message}">
+							<span class="glyphicon glyphicon-user"></span>
+					</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/registrarse" th:text="#{signup.message}"><span class="glyphicon glyphicon-user"></span> </a></li>
-        <li><a href="/identificarse" th:text="#{login.message}"><span class="glyphicon glyphicon-log-in"></span> Identifícate</a></li>
+					<li><a href="/registrarse" th:text="#{signup.message}"><span
+							class="glyphicon glyphicon-user"></span> </a></li>
+					<li><a href="/identificarse" th:text="#{login.message}"><span
+							class="glyphicon glyphicon-log-in"></span> Identifícate</a></li>
 				</ul>
 			</div>
 		</div>
@@ -47,7 +52,8 @@
 
 	<div class="container">
 		<h2 th:text="#{mark.message}"></h2>
-		<button type="button" id="updateButton" class="btn btn-default" th:text="#{update.message}"></button>
+		<button type="button" id="updateButton" class="btn btn-default"
+			th:text="#{update.message}"></button>
 		<script>
 			$("#updateButton").click(function() {
 				$("#tableMarks").load('/mark/list/update');
@@ -59,8 +65,8 @@
 				<thead>
 					<tr>
 						<th class="col-md-1">id</th>
-						<th th:text="#{description.message}"> </th>
-						<th th:text="#{score.message}" ></th>
+						<th th:text="#{description.message}"></th>
+						<th th:text="#{score.message}"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
@@ -71,18 +77,22 @@
 						<td th:text="${mark.id}">1</td>
 						<td th:text="${mark.description}">Ejercicio 1</td>
 						<td th:text="${mark.score}">10</td>
-						<td><a th:href="${'/mark/details/' + mark.id}"th:text="#{detail.message}"> <span
-						class="glyphicon glyphicon-log-in"></span> </a></td>
-						<td><a th:href="${'/mark/edit/' + mark.id}"th:text="#{user.modify}"> <span
-						class="glyphicon glyphicon-log-in"></span> </a></td>
-						<td><a th:href="${'/mark/delete/' + mark.id}" th:text="#{remove.message}"> <span
-						class="glyphicon glyphicon-log-in"></span> </a></td>
+						<td><a th:href="${'/mark/details/' + mark.id}"
+							th:text="#{detail.message}"> <span
+								class="glyphicon glyphicon-log-in"></span>
+						</a></td>
+						<td><a th:href="${'/mark/edit/' + mark.id}"
+							th:text="#{user.modify}"> <span
+								class="glyphicon glyphicon-log-in"></span>
+						</a></td>
+						<td><a th:href="${'/mark/delete/' + mark.id}"
+							th:text="#{remove.message}"> <span
+								class="glyphicon glyphicon-log-in"></span>
+						</a></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
-
-
 </body>
 </html>
