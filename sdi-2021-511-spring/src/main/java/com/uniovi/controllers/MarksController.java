@@ -7,6 +7,7 @@ import com.uniovi.service.UsersService;
 import com.uniovi.validators.MarkValidator;
 import com.uniovi.validators.SignUpFormValidator;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,10 +35,24 @@ public class MarksController {
 	private MarkValidator marksValidator;
 
 	@RequestMapping("/mark/list")
-	public String getList(Model model) {
-		model.addAttribute("markList", marksService.getMarks());
-		return "mark/list";
+	public String getList(Model model, Principal principal){
+	String dni = principal.getName(); // DNI es el name de la autenticación
+	User user = usersService.getUserByDni(dni);
+	model.addAttribute("markList", marksService.getMarksForUser(user) );
+	return "mark/list";
 	}
+	
+	//Este s epuede usar desde otros puntos de la aplicacion no solo sobre el controlador
+	/*
+	@RequestMapping("/mark/list")
+	public String getList(Model model){
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	String dni = auth.getName();
+	User user = usersService.getUserByDni(dni);
+	model.addAttribute("markList", marksService.getMarksForUser(user));
+	return "mark/list";
+	}
+*/
 
 	@RequestMapping(value = "/mark/add", method = RequestMethod.POST)
 	public String setMark(@Validated Mark mark, BindingResult result) {
@@ -87,9 +102,11 @@ public class MarksController {
 	}
 
 	@RequestMapping("/mark/list/update")
-	public String updateList(Model model) {
-		model.addAttribute("markList", marksService.getMarks());
-		return "mark/list :: tableMarks";
+	public String updateList(Model model, Principal principal){
+	String dni = principal.getName(); // DNI es el name de la autenticación
+	User user = usersService.getUserByDni(dni);
+	model.addAttribute("markList", marksService.getMarksForUser(user));
+	return "mark/list :: tableMarks";
 	}
 
 	@RequestMapping(value = "/mark/edit/{id}")

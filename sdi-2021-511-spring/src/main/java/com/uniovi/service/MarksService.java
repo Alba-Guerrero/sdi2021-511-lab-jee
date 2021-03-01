@@ -15,14 +15,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Mark;
+import com.uniovi.entities.User;
 import com.uniovi.repositories.MarksRepository;
 
 @Service
 public class MarksService {
-	
+
 	@Autowired
 	private HttpSession httpSession;
-	
+
 	@Autowired
 	private MarksRepository marksRepository;
 
@@ -31,17 +32,26 @@ public class MarksService {
 		marksRepository.findAll().forEach(marks::add);
 		return marks;
 	}
-	
-	
-	public void setMarkResend(boolean revised,Long id){
+
+	public void setMarkResend(boolean revised, Long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String dni = auth.getName();
 		Mark mark = marksRepository.findById(id).get();
-		if(mark.getUser().getDni().equals(dni) ) {
-		marksRepository.updateResend(revised, id);
+		if (mark.getUser().getDni().equals(dni)) {
+			marksRepository.updateResend(revised, id);
 		}
+	}
+
+	public List<Mark> getMarksForUser(User user) {
+		List<Mark> marks = new ArrayList<Mark>();
+		if (user.getRole().equals("ROLE_STUDENT")) {
+			marks = marksRepository.findAllByUser(user);
 		}
-	
+		if (user.getRole().equals("ROLE_PROFESSOR")) {
+			marks = getMarks();
+		}
+		return marks;
+	}
 
 	public void addMark(Mark mark) {
 		marksRepository.save(mark);
@@ -51,16 +61,15 @@ public class MarksService {
 		marksRepository.deleteById(id);
 	}
 
-	
-	public Mark getMark(Long id){
+	public Mark getMark(Long id) {
 		Set<Mark> consultedList = (Set<Mark>) httpSession.getAttribute("consultedList");
-		if ( consultedList == null ) {
-		consultedList = new HashSet<Mark>();
+		if (consultedList == null) {
+			consultedList = new HashSet<Mark>();
 		}
 		Mark obtainedmark = marksRepository.findById(id).get();
 		consultedList.add(obtainedmark);
 		httpSession.setAttribute("consultedList", consultedList);
 		return obtainedmark;
-		}
+	}
 
 }
