@@ -23,17 +23,16 @@ import org.springframework.web.bind.annotation.*;
 public class MarksController {
 	@Autowired
 	private MarksService marksService;
-	
+
 	@Autowired
 	private UsersService usersService;
-	
+
 	@Autowired
 	private HttpSession httpSession;
-	
+
 	@Autowired
 	private MarkValidator marksValidator;
-	
-	
+
 	@RequestMapping("/mark/list")
 	public String getList(Model model) {
 		model.addAttribute("markList", marksService.getMarks());
@@ -51,6 +50,18 @@ public class MarksController {
 		return "redirect:/mark/list";
 	}
 
+	@RequestMapping(value = "/mark/{id}/resend", method = RequestMethod.GET)
+	public String setResendTrue(Model model, @PathVariable Long id) {
+		marksService.setMarkResend(true, id);
+		return "redirect:/mark/list";
+	}
+
+	@RequestMapping(value = "/mark/{id}/noresend", method = RequestMethod.GET)
+	public String setResendFalse(Model model, @PathVariable Long id) {
+		marksService.setMarkResend(false, id);
+		return "redirect:/mark/list";
+	}
+
 	@RequestMapping("/mark/details/{id}")
 	public String getDetail(Model model, @PathVariable Long id) {
 		model.addAttribute("mark", marksService.getMark(id));
@@ -62,14 +73,12 @@ public class MarksController {
 		marksService.deleteMark(id);
 		return "redirect:/mark/list";
 	}
-	
-	
+
 	@RequestMapping(value = "/mark/add", method = RequestMethod.GET)
 	public String setMark(Model model) {
-	model.addAttribute("mark", new Mark());
-	 return "mark/add";
+		model.addAttribute("mark", new Mark());
+		return "mark/add";
 	}
-
 
 	@RequestMapping(value = "mark/add")
 	public String getMark(Model model) {

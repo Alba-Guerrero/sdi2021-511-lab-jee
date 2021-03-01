@@ -81,11 +81,40 @@
 							th:text="#{detail.message}"> <span
 								class="glyphicon glyphicon-log-in"></span>
 						</a></td>
-						<td><a th:href="${'/mark/edit/' + mark.id}"
-							th:text="#{user.modify}"> <span
-								class="glyphicon glyphicon-log-in"></span>
-						</a></td>
-						<td><a th:href="${'/mark/delete/' + mark.id}"
+						<td><a sec:authorize="hasRole('ROLE_PROFESSOR')"
+							th:href="${'/mark/edit/' + mark.id}" th:text="#{user.modify}">
+								<span class="glyphicon glyphicon-log-in"></span>
+						</a>
+							<div sec:authorize="hasRole('ROLE_STUDENT')">
+								<div th:if="${mark.resend}">
+										<button type="button" th:id="${'resendButton' + mark.id}"
+						 class="btn btn-info">Reenviar</button>
+						 <script th:inline="javascript">
+						 /*<![CDATA[*/
+						 $( "#resendButton[[${mark.id}]]" ).click(function() {
+						 $.get( "/mark/[[${mark.id}]]/noresend", function( data ) {
+						 $("#tableMarks").load('/mark/list/update');
+						 });
+						 });
+						 /*]]>*/
+						 </script>
+								</div>
+								<div th:unless="${mark.resend}">
+									<button type="button" th:id="${'noresendButton' + mark.id}"
+						 class="btn btn-default">No reenviar</button>
+						 <script th:inline="javascript">
+						 /*<![CDATA[*/
+						 $( "#noresendButton[[${mark.id}]]" ).click(function() {
+						 $.get( "/mark/[[${mark.id}]]/resend", function( data ) {
+						 $("#tableMarks").load('/mark/list/update');
+						 });
+						 });
+						 /*]]>*/
+						 </script>
+								</div>
+							</div></td>
+						<td><a sec:authorize="hasRole('ROLE_PROFESSOR')"
+							th:href="${'/mark/delete/' + mark.id}"
 							th:text="#{remove.message}"> <span
 								class="glyphicon glyphicon-log-in"></span>
 						</a></td>
