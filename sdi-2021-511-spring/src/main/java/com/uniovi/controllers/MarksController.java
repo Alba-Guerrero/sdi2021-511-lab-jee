@@ -9,11 +9,15 @@ import com.uniovi.validators.SignUpFormValidator;
 
 import java.security.Principal;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,21 +39,22 @@ public class MarksController {
 	private MarkValidator marksValidator;
 
 	@RequestMapping("/mark/list")
-	public String getList(Model model, Principal principal,
+	public String getList(Model model,Pageable pageable, Principal principal,
 		@RequestParam (value = "", required=false)String searchText) {
 	String dni = principal.getName(); // DNI es el name de la autenticación
 	User user = usersService.getUserByDni(dni);
-	
-	
+	Page<Mark> marks = new PageImpl<Mark>(new LinkedList<Mark>());
+
 	if(searchText != null  && !searchText.isEmpty()) {
-	model.addAttribute("markList", marksService.searchMarksByDescriptionAndNameForUser(searchText, user) );
+			marks= marksService.searchMarksByDescriptionAndNameForUser(pageable, searchText, user);
 
 	}else
 	{
-		model.addAttribute("markList", marksService.getMarksForUser(user));
+		marks= marksService.getMarksForUser(pageable, user);
 		
 	}
-	
+	model.addAttribute("markList",marks.getContent());
+	model.addAttribute("page", marks);
 	return "mark/list";
 	}
 	
@@ -66,10 +71,10 @@ public class MarksController {
 */
 
 	@RequestMapping(value = "/mark/add", method = RequestMethod.POST)
-	public String setMark(@Validated Mark mark, BindingResult result) {
+	public String setMark(@Validated Mark mark, BindingResult result,Model model) {
 		marksValidator.validate(mark, result);
 		if (result.hasErrors()) {
-
+			model.addAttribute("usersList", usersService.getUsers());
 			return "mark/add";
 		}
 		marksService.addMark(mark);
@@ -102,21 +107,23 @@ public class MarksController {
 
 	@RequestMapping(value = "/mark/add", method = RequestMethod.GET)
 	public String setMark(Model model) {
+		model.addAttribute("usersList", usersService.getUsers());
 		model.addAttribute("mark", new Mark());
-		return "mark/add";
+		return "/mark/add";
 	}
-
+/*
 	@RequestMapping(value = "mark/add")
 	public String getMark(Model model) {
 		model.addAttribute("usersList", usersService.getUsers());
 		return "mark/add";
-	}
+	}*/
 
 	@RequestMapping("/mark/list/update")
-	public String updateList(Model model, Principal principal){
+	public String updateList(Model model,Pageable pageable, Principal principal){
 	String dni = principal.getName(); // DNI es el name de la autenticación
 	User user = usersService.getUserByDni(dni);
-	model.addAttribute("markList", marksService.getMarksForUser(user));
+	Page<Mark> marks= marksService.getMarksForUser(pageable,user);
+	model.addAttribute("markList",marks.getContent() );
 	return "mark/list :: tableMarks";
 	}
 

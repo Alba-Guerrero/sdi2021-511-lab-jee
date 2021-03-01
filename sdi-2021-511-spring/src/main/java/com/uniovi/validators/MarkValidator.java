@@ -24,7 +24,7 @@ public class MarkValidator implements Validator {
 		
 		//ValidationUtils.rejectIfEmptyOrWhitespace(errors, "score", "Error");
 		
-		if (mark.getScore() <= 0 || mark.getScore() >= 10 ) {
+		if (mark.getScore() < 0 || mark.getScore() >= 10 ) {
 			errors.rejectValue("description", "Error.mark.score");
 		}if(mark.getDescription().length() < 20 )
 			errors.rejectValue("description", "Error.mark.description");
