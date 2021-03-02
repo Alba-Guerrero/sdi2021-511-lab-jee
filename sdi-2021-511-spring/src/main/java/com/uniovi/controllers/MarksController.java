@@ -5,12 +5,11 @@ import com.uniovi.entities.User;
 import com.uniovi.service.MarksService;
 import com.uniovi.service.UsersService;
 import com.uniovi.validators.MarkValidator;
-import com.uniovi.validators.SignUpFormValidator;
 
 import java.security.Principal;
-import java.util.HashSet;
+
 import java.util.LinkedList;
-import java.util.Set;
+
 
 import javax.servlet.http.HttpSession;
 
@@ -31,6 +30,7 @@ public class MarksController {
 
 	@Autowired
 	private UsersService usersService;
+
 
 	@Autowired
 	private HttpSession httpSession;
