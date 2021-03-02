@@ -20,7 +20,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a href="/profesor/list">Ver lista de profesores</a></li>
-		<li class="active"><a href="/profesor/add">Agregar un profesor</a></li>
+		<li sec:authorize="hasRole('ROLE_ADMIN')" class="active"><a href="/profesor/add">Agregar un profesor</a></li>
       </ul>
     </div>
   </div>
@@ -29,7 +29,7 @@
 
 <div class="container">
   <h2>Profesores</h2>
-  <p>Actualemnte estan dados de alta los siguientes profesores</p>                                                                                      
+  <p>Actualemnte estan dados de alta los siguientes profesores</p>                                                                                   
   <div class="table-responsive">          
   <table class="table table-hover">
     <thead>
@@ -50,8 +50,9 @@
 	     <td th:text="${profesor.dni}"> Dni</td>
 	    <td th:text="${profesor.categoria}">Categoria</td>
 	    
-	    <td><a th:href="${'/profesor/edit/' + profesor.id}">modificar</a></td>
-	    <td><a th:href="${'/profesor/delete/' + profesor.id}">eliminar</a></td>
+	    <td sec:authorize="hasRole('ROLE_ADMIN')" ><a th:href="${'/profesor/edit/' + profesor.id}">modificar</a></td>
+	    <td sec:authorize="hasRole('ROLE_ADMIN')" ><a th:href="${'/profesor/delete/' + profesor.id}">eliminar</a></td>
+	     <td sec:authorize="hasAnyRole('ROLE_PROFESSOR','ROLE_ADMIN')" ><a th:href="${'/profesor/details/' + profesor.id}">Detalles</a></td>
 	  </tr>
 	</tbody>
   </table>

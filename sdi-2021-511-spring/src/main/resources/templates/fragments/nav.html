@@ -12,7 +12,7 @@
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 
-				<li><a href="/">Home</a></li>
+				<li><a href="/home">Home</a></li>
 				<li id="marks-menu" class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#" th:text="#{managment.mark.message}">
 						<span class="glyphicon glyphicon-user"></span> Gestion de notas <span
@@ -26,9 +26,30 @@
 						<li><a href="/mark/list" th:text="#{see.mark.message}"> <span
 								class="glyphicon glyphicon-user"></span>Ver notas
 						</a></li>
-					</ul></li>
+					</ul>
+					
+					</li>
+					
+					
+					<li id="marks-menu" class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#" th:text="#{managment.profesor}">
+						<span class="glyphicon glyphicon-user"></span> Gestión de profesores <span
+						class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+
+						<li sec:authorize="hasRole('ROLE_ADMIN')"><a
+							href="/profesor/add" th:text="#{add.profesor.message}"> <span
+								class="glyphicon glyphicon-user"></span></a></li>
+						<li><a href="/profesor/list" th:text="#{see.profesor.message}"> <span
+								class="glyphicon glyphicon-user"></span>Ver notas
+						</a></li>
+						
+					</ul>
+					
+					</li>
 				<li id="user-menu" class="dropdown"
-					sec:authorize="hasRole('ROLE_ADMIN')">><a
+					sec:authorize="hasRole('ROLE_ADMIN')"><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#"
 					th:text="#{usuario.message}"> <span
 						class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
