@@ -29,11 +29,23 @@ public class UsersController {
 	@Autowired
 	private RolesService rolesService;
 
+	
+
 	@RequestMapping("/user/list")
-	public String getListado(Model model) {
-		model.addAttribute("usersList", usersService.getUsers());
+	public String getList(Model model, @RequestParam(value = "", required = false) String searchText) {
+
+		if (searchText != null && !searchText.isEmpty()) {
+
+			model.addAttribute("usersList", usersService.searchByDescriptionOrName(searchText));
+		} else {
+			model.addAttribute("usersList", usersService.getUsers());
+
+		}
 		return "user/list";
+
 	}
+	
+
 	@RequestMapping("/user/list/update")
 	public String updateList(Model model) {
 		model.addAttribute("usersList", usersService.getUsers());
