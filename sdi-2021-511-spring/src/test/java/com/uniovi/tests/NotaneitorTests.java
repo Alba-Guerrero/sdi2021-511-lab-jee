@@ -1,13 +1,20 @@
 package com.uniovi.tests;
 
 import static org.junit.Assert.*;
+
+import java.util.List;
+
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.uniovi.tests.pageobjects.PO_HomeView;
+import com.uniovi.tests.pageobjects.PO_LoginView;
+import com.uniovi.tests.pageobjects.PO_PrivateView;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_View;
+import com.uniovi.tests.util.SeleniumUtils;
 import com.uniovi.tests.pageobjects.PO_RegisterView;
 
 import org.junit.runners.MethodSorters;
@@ -150,5 +157,101 @@ public class NotaneitorTests {
 		PO_RegisterView.checkKey(driver, "Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
 		
 	}
+	
+	//PRN. Loguearse con exito desde el ROl de Usuario, 99999990D, 123456
+	@Test
+	public void PR07() {
+	//Vamos al formulario de logueo.
+	PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+	//Rellenamos el formulario
+	PO_LoginView.fillForm(driver, "99999990A" , "123456" );
+	//COmprobamos que entramos en la pagina privada de Alumno
+	PO_View.checkElement(driver, "text", "Notas del usuario");
+	
+	
+	}
+	
+	
+	@Test
+	public void PR08() {
+	
+	
+	//Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		//Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "99999993D" , "123456" );
+		//COmprobamos que entramos en la pagina privada de Alumno
+		PO_View.checkElement(driver, "text", "Notas del usuario");	
+	}
+	
+	@Test
+	public void PR09() {
+		
+		//Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		//Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "99999988F" , "12356" );
+		//COmprobamos que la identificacion e sinavlaida
+		PO_View.checkElement(driver, "text", "Identifícate");
+		
+	}
+		
+	@Test
+	public void PR10() {
+		//Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		//Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "99999990A" , "123456" );
+		//COmprobamos que entramos en la pagina privada de Alumno
+		PO_View.checkElement(driver, "text", "Notas del usuario");
+		
+	}
+	
+	@Test
+	public void PR11() {
+		
+
+		//Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		//Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "99999990A" , "123456" );
+		//COmprobamos que clickamos en opcion de desocnectarnos
+		PO_View.checkElement(driver, "text", "Notas del usuario");
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		PO_View.checkElement(driver, "text", "Identifícate");
+	}
+	
+	//PR12. Loguearse, comprobar que se visualizan 4 filas de notas y desconectarse usando el rol de estudiante.
+	@Test
+	public void PR12() {
+	//Vamos al formulario de logueo.
+	PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+	//Rellenamos el formulario
+	PO_LoginView.fillForm(driver, "99999990A" , "123456" );
+	//COmprobamos que entramos en la pagina privada de Alumno
+	PO_View.checkElement(driver, "text", "Notas del usuario");
+	//Contamos el número de filas de notas
+	List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free",
+	"//tbody/tr", PO_View.getTimeout());
+	assertTrue(elementos.size() == 4);
+	//Ahora nos desconectamos
+	PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
+	
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
