@@ -7,8 +7,12 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.uniovi.entities.Mark;
 import com.uniovi.entities.Profesor;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.ProfesorRepository;
@@ -40,6 +44,8 @@ public class ProfesorService {
 		profesorRepository.save(profesor);
 
 	}
+	
+		
 
 	public void deleteProfesor(Long id) {
 		profesorRepository.deleteById(id);

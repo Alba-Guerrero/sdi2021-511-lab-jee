@@ -16,6 +16,10 @@ public class PO_Properties {
 	public static int getENGLISH() {
 		return ENGLISH;
 	}
+	public static int getMyProperties() {
+		return ENGLISH;
+	}
+	
 
 	static private String Path;
 	static int SPANISH = 0;

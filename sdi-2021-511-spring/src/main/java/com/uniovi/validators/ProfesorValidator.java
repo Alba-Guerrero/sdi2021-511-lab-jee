@@ -42,6 +42,10 @@ public class ProfesorValidator implements Validator {
 			errors.rejectValue("apellidos", "Error.signup.lastName.length");
 		
 		}
+		if (profesor.getCategoria().length() < 5 || profesor.getCategoria().length() > 24) {
+			errors.rejectValue("categoria", "Error.signup.categoria.length");
+		
+		}
 		
 	}
 }
